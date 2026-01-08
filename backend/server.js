@@ -5,7 +5,17 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-app.use(cors());
+
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://drivezone-one.vercel.app"
+    ]
+  })
+);
+
 app.use(express.json());
 
 // Connect DB (non-blocking now)
