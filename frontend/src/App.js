@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 function App() {
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/")
+    axios
+      .get(process.env.REACT_APP_API_URL)
       .then(res => setMsg(res.data))
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.error(err);
+        setMsg("Backend not reachable");
+      });
   }, []);
 
   return (
