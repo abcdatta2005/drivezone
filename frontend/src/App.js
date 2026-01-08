@@ -1,24 +1,39 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+
+import MainLayout from "./pages/MainLayout";
+import Aptitude from "./pages/Aptitude";
+import DSA from "./pages/DSA";
+import MockInterview from "./pages/MockInterview";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const [msg, setMsg] = useState("");
-
-  useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_URL)
-      .then(res => setMsg(res.data))
-      .catch(err => {
-        console.error(err);
-        setMsg("Backend not reachable");
-      });
-  }, []);
-
   return (
-    <div>
-      <h1>DriveZone</h1>
-      <p>{msg}</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        {/* AUTH PAGES (PUBLIC) */}
+        <Route path="/" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+
+        {/* PROTECTED APP LAYOUT */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/home" element={<h1>Welcome!</h1>} />
+          <Route path="/aptitude" element={<Aptitude />} />
+          <Route path="/dsa" element={<DSA />} />
+          <Route path="/mock" element={<MockInterview />} />
+        </Route>
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
