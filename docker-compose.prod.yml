@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  backend:
+    image: ./drivezone-backend:latest
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    restart: always
+
+  frontend:
+    image: ./drivezone-frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
