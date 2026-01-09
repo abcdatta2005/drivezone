@@ -38,10 +38,10 @@ const SignUp = () => {
       if (response.data.success) {
         navigate("/signin");
       } else {
-        setError(response.data.message);
+        alert(response.data.message);
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Server error");
+      alert(err.response?.data?.message);
     } finally {
       setLoading(false);
     }
